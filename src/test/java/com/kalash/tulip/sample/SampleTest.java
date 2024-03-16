@@ -1,6 +1,6 @@
-package com.example.tulip.sample;
+package com.kalash.tulip.sample;
 
-import com.example.tulip.controller.SampleController;
+import com.kalash.tulip.controller.sample.SampleController;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

@@ -1,4 +1,4 @@
-package com.example.tulip;
+package com.kalash.tulip;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,4 +1,4 @@
-package com.example.tulip.sample;
+package com.kalash.tulip.sample;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
