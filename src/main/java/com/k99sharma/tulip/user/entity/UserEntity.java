@@ -1,4 +1,4 @@
-package com.k99sharma.tulip.user;
+package com.k99sharma.tulip.user.entity;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.*;
@@ -6,9 +6,13 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
+/**
+ * User Entity
+ * Class to be used for user related data transfer between service and repository layer.
+ */
 @Data
 @Entity
-@Table(name = "Users")
+@Table(name = "users")
 @NoArgsConstructor
 @Setter
 @Getter

@@ -1,9 +1,15 @@
-package com.k99sharma.tulip.user;
+package com.k99sharma.tulip.user.mapper;
 
+import com.k99sharma.tulip.user.dto.UserDTO;
+import com.k99sharma.tulip.user.entity.UserEntity;
+import com.k99sharma.tulip.user.pojo.User;
 import org.springframework.stereotype.Component;
 
+/**
+ * User mapper class.
+ */
 @Component
-public class Mapper {
+public class UserMapper {
     /**
      * Map user to user DTO
      *
@@ -41,17 +47,17 @@ public class Mapper {
     /**
      * Map user to user DTO
      *
-     * @param userEntity object
+     * @param user object
      * @return userDTO object
      */
-    public UserDTO toUserDTO(UserEntity userEntity){
+    public UserDTO toUserDTO(UserEntity user){
         UserDTO userDTO = new UserDTO();
 
-        userDTO.setUsername(userEntity.getUsername());
-        userDTO.setEmail(userEntity.getEmail());
-        userDTO.setPassword(userEntity.getPassword());
-        userDTO.setFirstName(userEntity.getFirstName());
-        userDTO.setLastName(userEntity.getLastName());
+        userDTO.setUsername(user.getUsername());
+        userDTO.setEmail(user.getEmail());
+        userDTO.setPassword(user.getPassword());
+        userDTO.setFirstName(user.getFirstName());
+        userDTO.setLastName(user.getLastName());
 
         return userDTO;
     }
