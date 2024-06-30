@@ -4,9 +4,11 @@ import com.k99sharma.tulip.user.dto.UserDTO;
 import com.k99sharma.tulip.user.entity.UserEntity;
 import com.k99sharma.tulip.user.exception.UserNotFoundException;
 import com.k99sharma.tulip.user.mapper.UserMapper;
+import com.k99sharma.tulip.user.pojo.UserUpdateRequest;
 import com.k99sharma.tulip.user.repository.UserRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,6 +23,9 @@ public class UserServiceImpl implements UserService {
 
     // user mapper
     private final UserMapper mapper;
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     public UserServiceImpl(UserRepository repository, UserMapper mapper){
         this.repository = repository;
@@ -113,5 +118,33 @@ public class UserServiceImpl implements UserService {
             throw new UserNotFoundException("User not found.");
 
         return deleted == 1;
+    }
+
+    /**
+     * Business logic to update user using user id.
+     *
+     * @param id user id of user.
+     * @param updateDetails details of the user to be updated.
+     * @return UserDTO object.
+     * @throws UserNotFoundException in case user is not found.
+     */
+    @Override
+    public UserDTO updateUserById(Long id, UserUpdateRequest updateDetails) throws UserNotFoundException{
+        UserEntity userEntity = repository.findById(id)
+                .map(user -> {
+                    if(updateDetails.getFirstName() != null)
+                        user.setFirstName(updateDetails.getFirstName());
+
+                    if(updateDetails.getLastName() != null)
+                        user.setLastName(updateDetails.getLastName());
+
+                    if(updateDetails.getUsername() != null)
+                        user.setUsername(updateDetails.getUsername());
+
+                    return repository.save(user);
+                })
+                .orElseThrow(() -> new UserNotFoundException("User not found."));
+
+        return mapper.toUserDTO(userEntity);
     }
 }

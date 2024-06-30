@@ -2,6 +2,7 @@ package com.k99sharma.tulip.user.service;
 
 import com.k99sharma.tulip.user.exception.UserNotFoundException;
 import com.k99sharma.tulip.user.dto.UserDTO;
+import com.k99sharma.tulip.user.pojo.UserUpdateRequest;
 
 import java.util.List;
 
@@ -14,5 +15,6 @@ public interface UserService {
     public List<UserDTO> getAllUsers();
     public Boolean isUsernameValid(String username);
     public Boolean isEmailValid(String email);
+    public UserDTO updateUserById(Long userId, UserUpdateRequest updateRequest) throws UserNotFoundException;
     public Boolean deleteUserById(Long userId) throws UserNotFoundException;
 }

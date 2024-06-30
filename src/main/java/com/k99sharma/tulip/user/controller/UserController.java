@@ -1,10 +1,13 @@
 package com.k99sharma.tulip.user.controller;
 
 import com.k99sharma.tulip.shared.pojo.Deletion;
+import com.k99sharma.tulip.shared.pojo.Update;
 import com.k99sharma.tulip.shared.pojo.Validity;
+import com.k99sharma.tulip.user.dto.UserDTO;
 import com.k99sharma.tulip.user.exception.UserNotFoundException;
 import com.k99sharma.tulip.user.mapper.UserMapper;
 import com.k99sharma.tulip.user.pojo.User;
+import com.k99sharma.tulip.user.pojo.UserUpdateRequest;
 import com.k99sharma.tulip.user.service.UserService;
 import com.k99sharma.tulip.user.service.UserServiceImpl;
 import com.k99sharma.tulip.utils.ApiResponse;
@@ -71,7 +74,7 @@ public class UserController {
             logger.error(e.getMessage());
 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
-                    new ApiResponse<>(false, e.getMessage(), null)
+                    new ApiResponse<>(false, "Internal server error. An unexpected error occurred on the server.", null)
             );
         }
     }
@@ -106,7 +109,7 @@ public class UserController {
             logger.error(e.getMessage());
 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
-                    new ApiResponse<>(false, e.getMessage(), null)
+                    new ApiResponse<>(false, "Internal server error. An unexpected error occurred on the server.", null)
             );
         }
     }
@@ -134,7 +137,7 @@ public class UserController {
             logger.error(e.getMessage());
 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
-                    new ApiResponse<> (false, e.getMessage(), null)
+                    new ApiResponse<> (false, "Internal server error. An unexpected error occurred on the server.", null)
             );
         }
     }
@@ -163,7 +166,7 @@ public class UserController {
             logger.error(e.getMessage());
 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
-                    new ApiResponse<>(false, e.getMessage(), null)
+                    new ApiResponse<>(false, "Internal server error. An unexpected error occurred on the server.", null)
             );
         }
     }
@@ -192,7 +195,7 @@ public class UserController {
             logger.error(e.getMessage());
 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
-                    new ApiResponse<>(false, e.getMessage(), null)
+                    new ApiResponse<>(false, "Internal server error. An unexpected error occurred on the server.", null)
             );
         }
     }
@@ -221,13 +224,47 @@ public class UserController {
             logger.error(e.getMessage());
 
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                    new ApiResponse<>(false, "User not found.", null)
+                    new ApiResponse<>(false, "User not found.", new Deletion(false))
             );
         }catch(Exception e){
             logger.error(e.getMessage());
 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
-                    new ApiResponse<> (false, e.getMessage(), null)
+                    new ApiResponse<> (false, "Internal server error. An unexpected error occurred on the server.", null)
+            );
+        }
+    }
+
+    /**
+     * Update user data using user id.
+     * @param userId id of user.
+     * @return Validity object.
+     */
+    @PutMapping("/update/byId/{userId}")
+    public ResponseEntity<ApiResponse<Update>> updateUserByUserId(@PathVariable Long userId, @RequestBody UserUpdateRequest request){
+        try{
+            logger.info("Received the request to update the user by user id.");
+            UserDTO updatedUserDTO = userService.updateUserById(userId, request);
+
+            ApiResponse<Update> response = new ApiResponse<>(
+                    true,
+                    "User is updated.",
+                    new Update(true)
+            );
+
+            logger.info("The request to update the user is handled.");
+            return ResponseEntity.ok(response);
+        }catch(UserNotFoundException e){
+          logger.error(e.getMessage());
+
+          return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                  new ApiResponse<>(false, "User not found.", new Update(false))
+          );
+        } catch (Exception e){
+            logger.error(e.getMessage());
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+                    new ApiResponse<>(false, "Internal server error. An unexpected error occurred on the server.", null)
             );
         }
     }

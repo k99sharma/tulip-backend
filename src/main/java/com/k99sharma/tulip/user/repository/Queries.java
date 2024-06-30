@@ -5,15 +5,15 @@ package com.k99sharma.tulip.user.repository;
  */
 public class Queries {
     public static final String IS_USERNAME_VALID = """
-                    SELECT CASE WHEN COUNT(*) > 0\s
-                    THEN FALSE ELSE TRUE END AS validity\s
+                    SELECT CASE WHEN COUNT(*) > 0
+                    THEN FALSE ELSE TRUE END AS validity
                     FROM UserEntity u
                     WHERE u.username = :username
             """;
 
     public static final String IS_EMAIL_VALID = """
-                    SELECT CASE WHEN COUNT(*) > 0\s
-                    THEN FALSE ELSE TRUE END AS validity\s
+                    SELECT CASE WHEN COUNT(*) > 0
+                    THEN FALSE ELSE TRUE END AS validity
                     FROM UserEntity u
                     WHERE u.email = :email
             """;
