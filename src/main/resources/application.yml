@@ -1,0 +1,24 @@
+# Postgres DB configuration
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/tulip
+    username: apollo
+    password: pass@123
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+
+  devtools:
+    restart:
+      enabled: true
+
+logging:
+  level:
+    root: INFO
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+debug: true
